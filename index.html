@@ -1,0 +1,174 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Японский: кабинет</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="./img/40-406197_wuxi-is-famous-for-being-one-of-the-birthplaces-of-pagoda-png__1_-removebg-preview.png" type="png">
+</head>
+<body>
+  <header class="hero full">
+    <div class="hero-top wide">
+      <div>
+        <h1>Японский от 0 до N1</h1>
+        <p>Персональный кабинет: прогресс, кандзи, словарь, грамматика и тренировки.</p>
+      </div>
+      <div class="user-box">
+        <div class="pill">Пользователь: <span id="currentUser">-</span></div>
+        <button id="logoutBtn" class="danger">Выйти</button>
+      </div>
+    </div>
+    <div class="stats wide">
+      <div class="pill">Изучено: <span id="learnedCount">0</span></div>
+      <div class="pill">Очки: <span id="scoreCount">0</span></div>
+      <button id="resetProgress" class="danger">Сбросить прогресс</button>
+    </div>
+  </header>
+
+  <nav class="tabs tabs-6 wide">
+    <button class="tab active" data-tab="grammar">Грамматика</button>
+    <button class="tab" data-tab="kanji">Кандзи</button>
+    <button class="tab" data-tab="dictionary">Словарь</button>
+    <button class="tab" data-tab="kana">Хирагана/Катакана</button>
+    <button class="tab" data-tab="trainer">Тренировка</button>
+    <button class="tab" data-tab="profile">Личный кабинет</button>
+  </nav>
+
+  <main class="wide full-main">
+    <section id="grammar" class="panel active">
+      <div class="toolbar">
+        <select id="grammarLevel"></select>
+        <input id="grammarSearch" type="search" placeholder="Поиск по правилу или переводу" />
+      </div>
+      <div id="grammarList" class="card-grid"></div>
+    </section>
+
+    <section id="kanji" class="panel">
+      <div class="toolbar">
+        <select id="kanjiLevel"></select>
+        <input id="kanjiSearch" type="search" placeholder="Поиск по иероглифу или значению" />
+      </div>
+      <div id="kanjiList" class="card-grid"></div>
+    </section>
+
+    <section id="dictionary" class="panel">
+      <div class="toolbar">
+        <select id="dictDirection">
+          <option value="ru-jp">Перевод -> Японский</option>
+          <option value="jp-ru">Японский -> Перевод</option>
+        </select>
+        <input id="dictSearch" type="search" placeholder="Введите слово" />
+      </div>
+      <div id="dictList" class="card-grid"></div>
+    </section>
+
+    <section id="kana" class="panel">
+      <div class="kana-wrap">
+        <article class="card">
+          <h3>Хирагана</h3>
+          <div id="hiraganaGrid" class="kana-grid"></div>
+        </article>
+        <article class="card">
+          <h3>Катакана</h3>
+          <div id="katakanaGrid" class="kana-grid"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="trainer" class="panel">
+      <div class="profile-grid">
+        <article class="card stat-card">
+          <h4>Курс тренировок</h4>
+          <p>Текущий открытый уровень: <span id="courseUnlockedLevel">N5</span></p>
+          <p>Пройдено уроков: <span id="courseCompletedCount">0</span></p>
+          <p>Всего уроков: <span id="courseTotalCount">0</span></p>
+          <p>Прогресс уровня: <span id="courseLevelProgress">0%</span></p>
+        </article>
+
+        <article class="card profile-main">
+          <h4>Список уроков</h4>
+          <div id="courseLessons" class="duo-path"></div>
+        </article>
+
+        <article id="quizCard" class="card stat-card">
+          <h4 id="quizTitle">Выберите урок слева</h4>
+          <p id="quizProgress">0 / 0</p>
+          <div id="quizOptions" class="quiz-options"></div>
+          <p id="quizFeedback"></p>
+          <button id="nextQuestion" style="display:none;">Следующий вопрос</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="profile" class="panel">
+      <div class="profile-grid">
+        <article class="card profile-main">
+          <h3>Профиль</h3>
+          <div class="avatar-wrap">
+            <img id="profileAvatar" class="avatar" alt="Аватар" />
+            <div class="avatar-actions">
+              <input id="avatarInput" type="file" accept="image/*" />
+              <button id="removeAvatarBtn" class="danger">Удалить фото</button>
+            </div>
+          </div>
+          <p><strong>Имя:</strong> <span id="profileName">-</span></p>
+          <p><strong>Дата регистрации:</strong> <span id="profileCreated">-</span></p>
+        </article>
+
+        <article class="card stat-card">
+          <h4>Общий прогресс</h4>
+          <p>Изучено: <span id="profileLearned">0</span></p>
+          <p>Очки: <span id="profileScore">0</span></p>
+          <p>Уровень: <span id="profileLevel">1</span></p>
+          <p>XP до след. уровня: <span id="profileXpToNext">100</span></p>
+        </article>
+
+        <article class="card stat-card">
+          <h4>Ритм как в Duolingo</h4>
+          <p>Серия дней: <span id="profileStreak">0</span></p>
+          <p>Сердца: <span id="profileHearts">5</span></p>
+          <p>Ежедневная цель XP: <span id="profileDailyGoal">50</span></p>
+          <p>Сегодня набрано: <span id="profileTodayXp">0</span></p>
+        </article>
+
+        <article class="card stat-card">
+          <h4>Личный план</h4>
+          <div class="toolbar">
+            <input id="goalInput" type="text" placeholder="Цель (например: N3 к июню)" />
+            <button id="saveGoalBtn">Сохранить цель</button>
+          </div>
+          <p><strong>Моя цель:</strong> <span id="profileGoal">-</span></p>
+          <div id="duoPath" class="duo-path"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Кандзи с чтениями и stroke order, словарь, грамматика и персональный прогресс.</p>
+  </footer>
+
+  <div id="kanjiModal" class="kanji-modal" aria-hidden="true">
+    <article class="kanji-modal-card" role="dialog" aria-modal="true" aria-labelledby="kanjiModalTitle">
+      <div class="kanji-modal-head">
+        <h3 id="kanjiModalTitle">Кандзи</h3>
+        <button id="kanjiModalClose" class="danger">Закрыть</button>
+      </div>
+      <div id="kanjiModalBody"></div>
+    </article>
+  </div>
+
+  <div id="wordModal" class="kanji-modal" aria-hidden="true">
+    <article class="kanji-modal-card" role="dialog" aria-modal="true" aria-labelledby="wordModalTitle">
+      <div class="kanji-modal-head">
+        <h3 id="wordModalTitle">Слово</h3>
+        <button id="wordModalClose" class="danger">Закрыть</button>
+      </div>
+      <div id="wordModalBody"></div>
+    </article>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
